@@ -3,14 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Solicitud de Certificado</title>
+<title>Portal de Certificados | Carflex</title>
 
 <style>
 
 :root{
     --primary:#ff7225;
     --primary-dark:#e65a15;
+    --text:#1f2937;
+    --muted:#6b7280;
 }
 
 /* RESET */
@@ -41,43 +42,57 @@ body::before{
 
 /* CARD */
 .card{
-    background:rgba(255,255,255,.96);
+    background:rgba(255,255,255,.97);
     padding:40px;
-    border-radius:16px;
+    border-radius:18px;
     width:100%;
-    max-width:420px;
-    box-shadow:0 20px 40px rgba(0,0,0,.25);
+    max-width:460px;
+    box-shadow:0 25px 50px rgba(0,0,0,.25);
     text-align:center;
     backdrop-filter:blur(6px);
-    transition:.4s;
+    animation:fade .4s ease;
 }
 
+/* LOGO */
+.logo{
+    width:160px;
+    margin-bottom:20px;
+}
+
+/* TITULOS */
 h2{
     font-weight:600;
+    margin-bottom:8px;
+    color:var(--text);
+}
+
+.subtitle{
+    font-size:14px;
+    color:var(--muted);
     margin-bottom:25px;
-    color:#333;
 }
 
 /* INPUTS */
 .input-group{
-    margin-bottom:15px;
+    margin-bottom:18px;
     text-align:left;
 }
 
 label{
     font-size:12px;
-    font-weight:bold;
-    color:#666;
+    font-weight:600;
+    color:#555;
     text-transform:uppercase;
+    letter-spacing:.5px;
 }
 
 input{
     width:100%;
     padding:14px;
     margin-top:6px;
-    border-radius:8px;
+    border-radius:10px;
     border:2px solid #eee;
-    font-size:16px;
+    font-size:15px;
     outline:none;
     transition:.3s;
 }
@@ -90,13 +105,13 @@ input:focus{
 button{
     width:100%;
     padding:15px;
-    margin-top:15px;
-    border-radius:8px;
+    margin-top:10px;
+    border-radius:10px;
     border:none;
     background:var(--primary);
     color:#fff;
-    font-size:16px;
-    font-weight:bold;
+    font-size:15px;
+    font-weight:600;
     cursor:pointer;
     transition:.3s;
 }
@@ -106,38 +121,45 @@ button:hover{
     transform:translateY(-2px);
 }
 
+button:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+    transform:none;
+}
+
 /* MENSAJES */
 .msg{
     margin-top:18px;
     font-size:14px;
 }
 
-.loading{color:#666;}
+.loading{color:#555;}
+
 .error{
-    background:#f8d7da;
-    color:#721c24;
+    background:#fdecea;
+    color:#b91c1c;
     padding:12px;
-    border-radius:8px;
+    border-radius:10px;
 }
 
-/* PANTALLA EXITO */
+/* EXITO */
 .success-screen{
     display:none;
     text-align:center;
 }
 
 .success-icon{
-    font-size:48px;
+    font-size:50px;
     margin-bottom:15px;
 }
 
 .success-screen h3{
-    color:#155724;
+    color:#065f46;
     margin-bottom:10px;
 }
 
 .success-screen p{
-    color:#555;
+    color:#444;
     margin-bottom:20px;
 }
 
@@ -149,13 +171,16 @@ button:hover{
     background:#111;
 }
 
-.fade{
-    animation:fade .4s ease;
-}
-
 @keyframes fade{
     from{opacity:0; transform:translateY(10px);}
     to{opacity:1; transform:translateY(0);}
+}
+
+/* RESPONSIVE */
+@media(max-width:480px){
+.card{
+    padding:30px 20px;
+}
 }
 
 </style>
@@ -166,24 +191,29 @@ button:hover{
 <div class="card">
 
 <!-- FORMULARIO -->
-<div id="form-screen" class="fade">
+<div id="form-screen">
 
-<h2>Solicitar Certificado de Última Mantención</h2>
+<img src="LOGO CARFLEX.svg" class="logo" alt="Carflex">
+
+<h2>Portal de Certificados</h2>
+<p class="subtitle">
+Solicite su certificado de última mantención ingresando la patente y su correo electrónico.
+</p>
 
 <form id="form">
 
 <div class="input-group">
 <label>Patente</label>
-<input id="patente" placeholder="Ej: ABCD12" maxlength="6" required autocomplete="off">
+<input id="patente" placeholder="Ej: AB123C" maxlength="6" required autocomplete="off">
 </div>
 
 <div class="input-group">
 <label>Correo Electrónico</label>
-<input id="correo" type="email" placeholder="tu@correo.com" required>
+<input id="correo" type="email" placeholder="ejemplo@correo.com" required>
 </div>
 
 <button type="submit" id="btn-submit">
-Enviar Solicitud
+Solicitar Certificado
 </button>
 
 <div id="msg" class="msg"></div>
@@ -192,14 +222,14 @@ Enviar Solicitud
 </div>
 
 <!-- EXITO -->
-<div id="success-screen" class="success-screen fade">
+<div id="success-screen" class="success-screen">
 
 <div class="success-icon">✅</div>
 
 <h3>Solicitud enviada correctamente</h3>
 
 <p>
-Hemos enviado el certificado al correo:<br>
+El certificado fue enviado al correo:<br>
 <strong id="correo-confirmado"></strong>
 </p>
 
@@ -221,7 +251,8 @@ function normalizarPatente(v){
 
 function patenteValida(p){
     return /^[A-Z]{4}[0-9]{2}$/.test(p) ||
-           /^[A-Z]{2}[0-9]{4}$/.test(p);
+           /^[A-Z]{2}[0-9]{4}$/.test(p) ||
+           /^[A-Z]{2}[0-9]{2}[A-Z]{2}$/.test(p);
 }
 
 const inputPatente=document.getElementById("patente");
@@ -242,7 +273,7 @@ const correo=document.getElementById("correo").value;
 
 if(!patenteValida(patente)){
     msg.className="msg error";
-    msg.innerHTML="Formato de patente inválido";
+    msg.innerHTML="Formato de patente inválido.";
     return;
 }
 
@@ -261,7 +292,6 @@ body:JSON.stringify({patente,correo})
 if(!response.ok) throw new Error();
 
 document.getElementById("correo-confirmado").textContent=correo;
-
 document.getElementById("form-screen").style.display="none";
 document.getElementById("success-screen").style.display="block";
 
@@ -276,7 +306,6 @@ btn.disabled=false;
 
 });
 
-/* RESET UX */
 function resetForm(){
 document.getElementById("form").reset();
 document.getElementById("success-screen").style.display="none";

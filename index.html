@@ -85,7 +85,7 @@ label{
     text-transform:uppercase;
     letter-spacing:.5px;
     display:block;
-    margin-bottom:12px; /* <- más espacio entre label y lista */
+    margin-bottom:12px; /* espacio entre label y lista */
 }
 
 input[type=text], input[type=email]{
@@ -190,37 +190,40 @@ button:disabled{
 
 .checkbox-list li{
     margin-bottom:12px;
-    display:flex;
-    align-items:center;
+    display: flex;
+    align-items: center; /* centra verticalmente el checkbox y texto */
 }
 
 .checkbox-list input[type=checkbox]{
-    appearance:none;
-    width:20px;
-    height:20px;
-    border:2px solid #eee;
-    border-radius:4px;
-    margin-right:10px;
-    cursor:pointer;
-    position:relative;
-    transition:0.3s;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #eee;
+    border-radius: 4px;
+    margin-right: 10px;
+    cursor: pointer;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
 }
 
 .checkbox-list input[type=checkbox]:checked{
-    background:var(--green-light);
-    border-color:var(--green);
+    background: var(--green-light);
+    border-color: var(--green);
 }
 
 .checkbox-list input[type=checkbox]:checked::after{
     content:"";
-    position:absolute;
-    top:3px;
-    left:7px;
-    width:4px;
-    height:10px;
+    width: 4px;
+    height: 10px;
     border: solid white;
     border-width: 0 2px 2px 0;
     transform: rotate(45deg);
+    position: absolute;
+    top: 3px;
+    left: 7px;
 }
 
 /* RESPONSIVE */

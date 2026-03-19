@@ -85,7 +85,7 @@ label{
     text-transform:uppercase;
     letter-spacing:.5px;
     display:block;
-    margin-bottom:6px;
+    margin-bottom:12px; /* <- más espacio entre label y lista */
 }
 
 input[type=text], input[type=email]{
@@ -174,11 +174,18 @@ button:disabled{
     background:#111;
 }
 
+/* ANIMACION */
+@keyframes fade{
+    from{opacity:0; transform:translateY(10px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
 /* CHECKBOX LISTA */
 .checkbox-list{
     list-style:none;
     padding-left:0;
-    margin:0;
+    margin-top:0; /* mantiene espacio desde label */
+    margin-bottom:0;
 }
 
 .checkbox-list li{

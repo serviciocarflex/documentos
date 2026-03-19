@@ -4,13 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Portal de Documentos | Carflex</title>
-
 <style>
 :root{
     --primary:#ff7225;
     --primary-dark:#e65a15;
     --text:#1f2937;
     --muted:#6b7280;
+    --green:#4CAF50;       /* color del check */
+    --green-light:#A8E6A2; /* fondo verde claro al marcar */
 }
 
 /* RESET */
@@ -87,7 +88,7 @@ label{
     margin-bottom:6px;
 }
 
-input[type=text], input[type=email], select{
+input[type=text], input[type=email]{
     width:100%;
     padding:14px;
     margin-top:6px;
@@ -99,7 +100,7 @@ input[type=text], input[type=email], select{
     background:#fff;
 }
 
-input:focus, select:focus{
+input:focus{
     border-color:var(--primary);
 }
 
@@ -173,44 +174,46 @@ button:disabled{
     background:#111;
 }
 
-/* ANIMACION */
-@keyframes fade{
-    from{opacity:0; transform:translateY(10px);}
-    to{opacity:1; transform:translateY(0);}
+/* CHECKBOX LISTA */
+.checkbox-list{
+    list-style:none;
+    padding-left:0;
+    margin:0;
 }
 
-/* CHECKBOXES TIPO DE DOCUMENTO PROFESIONAL */
-.checkbox-group{
+.checkbox-list li{
+    margin-bottom:12px;
     display:flex;
-    gap:12px;
-    flex-wrap:wrap;
+    align-items:center;
 }
 
-.checkbox-group input[type=checkbox]{
-    display:none;
-}
-
-.checkbox-group label{
-    padding:12px 18px;
+.checkbox-list input[type=checkbox]{
+    appearance:none;
+    width:20px;
+    height:20px;
     border:2px solid #eee;
-    border-radius:10px;
+    border-radius:4px;
+    margin-right:10px;
     cursor:pointer;
-    font-size:14px;
-    font-weight:500;
-    color:var(--text);
-    background:#fff;
-    transition:.3s;
-    user-select:none;
-    flex:1;
-    text-align:center;
-    min-width:120px;
+    position:relative;
+    transition:0.3s;
 }
 
-/* Estilo verde claro al seleccionar */
-.checkbox-group input[type=checkbox]:checked + label{
-    border-color:#4CAF50;       /* borde verde */
-    background:#A8E6A2;         /* verde claro de fondo */
-    color:#fff;                 /* texto blanco */
+.checkbox-list input[type=checkbox]:checked{
+    background:var(--green-light);
+    border-color:var(--green);
+}
+
+.checkbox-list input[type=checkbox]:checked::after{
+    content:"";
+    position:absolute;
+    top:3px;
+    left:7px;
+    width:4px;
+    height:10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
 }
 
 /* RESPONSIVE */
@@ -218,15 +221,9 @@ button:disabled{
 .card{
     padding:30px 20px;
 }
-.checkbox-group{
-    flex-direction:column;
-    gap:10px;
-}
 }
 </style>
-
 </head>
-
 <body>
 
 <div class="card">
@@ -255,16 +252,20 @@ Solicite su documento ingresando la patente, su correo electrónico y el tipo de
 
 <div class="input-group">
 <label>Tipo de Documento</label>
-<div class="checkbox-group">
-  <input type="checkbox" id="tipoSOAP" name="tipo" value="SOAP">
-  <label for="tipoSOAP">SOAP</label>
-
-  <input type="checkbox" id="tipoPC" name="tipo" value="PC">
-  <label for="tipoPC">Permiso de Circulación</label>
-
-  <input type="checkbox" id="tipoMANT" name="tipo" value="MANTENCION">
-  <label for="tipoMANT">Certificado Última Mantención</label>
-</div>
+<ul class="checkbox-list">
+    <li>
+        <input type="checkbox" id="tipoSOAP" name="tipo" value="SOAP">
+        <label for="tipoSOAP">SOAP</label>
+    </li>
+    <li>
+        <input type="checkbox" id="tipoPC" name="tipo" value="PC">
+        <label for="tipoPC">Permiso de Circulación</label>
+    </li>
+    <li>
+        <input type="checkbox" id="tipoMANT" name="tipo" value="MANTENCION">
+        <label for="tipoMANT">Certificado Última Mantención</label>
+    </li>
+</ul>
 </div>
 
 <button type="submit" id="btn-submit">Solicitar Certificado</button>

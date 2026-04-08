@@ -11,28 +11,25 @@
             --text: #1f2937;
             --muted: #6b7280;
             --green: #4CAF50;
-            --border: #e2e8f0;
-            --bg-card: #ffffff;
-            --radius-lg: 20px;
-            
-            /* Colores para los pasos (siguiendo el estilo anterior) */
-            --soft-blue-bg: #eff6ff;
-            --soft-blue-text: #3b82f6;
-            --purple-light: #f5f3ff;
-            --purple-focus: #8b5cf6;
-            --purple-ring: rgba(139, 92, 246, 0.15);
+            --border: #e5e7eb;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', 'Segoe UI', Roboto, sans-serif; }
+        /* RESET */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
         body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
             background-color: #f3f4f6;
             padding: 20px;
-            position: relative;
         }
 
         /* FONDO */
@@ -41,41 +38,107 @@
             position: absolute;
             inset: 0;
             background: url('fondo formulario.jpg') center/cover no-repeat;
-            filter: brightness(.4) blur(2px);
+            filter: brightness(.55) blur(4px);
             z-index: -1;
         }
 
-        /* CONTENEDOR PRINCIPAL DOS COLUMNAS */
-        .main-container {
-            width: 100%;
-            max-width: 1100px;
+        /* CONTENEDOR DE DOS COLUMNAS */
+        .main-wrapper {
             display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: 0;
-            background: var(--bg-card);
-            border-radius: var(--radius-lg);
+            grid-template-columns: 1fr 400px; /* Columna de formulario y columna de info */
+            background: rgba(255, 255, 255, .98);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 950px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, .3);
             overflow: hidden;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
             animation: fade .4s ease-out;
         }
 
-        /* COLUMNA IZQUIERDA: FORMULARIO */
-        .form-section {
-            padding: 50px;
-            background: white;
+        /* COLUMNA IZQUIERDA (TU CARD ORIGINAL) */
+        .form-column {
+            padding: 40px;
+            border-right: 1px solid #eee;
+            text-align: center;
         }
 
-        .logo { width: 140px; margin-bottom: 25px; }
-        h2 { font-size: 26px; font-weight: 800; color: var(--text); margin-bottom: 8px; }
-        .subtitle { font-size: 15px; color: var(--muted); margin-bottom: 35px; }
+        /* COLUMNA DERECHA (INFORMACIÓN NUEVA) */
+        .info-column {
+            padding: 40px;
+            background: #f9fafb;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
 
-        .input-group { margin-bottom: 22px; text-align: left; }
-        .input-group label {
-            font-size: 12px;
-            font-weight: 700;
+        .info-column h3 {
             color: var(--text);
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .step {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .step-number {
+            background: #ffece2;
+            color: var(--primary);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+            font-size: 14px;
+        }
+
+        .step-content h4 {
+            font-size: 14px;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .step-content p {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.4;
+        }
+
+        /* ESTILOS ORIGINALES DE TU FORMULARIO */
+        .logo {
+            width: 160px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: var(--muted);
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group > span {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--muted);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
             display: block;
             margin-bottom: 8px;
         }
@@ -83,118 +146,157 @@
         input[type=text], input[type=email] {
             width: 100%;
             padding: 14px;
-            border-radius: 10px;
+            border-radius: 12px;
             border: 2px solid var(--border);
             font-size: 15px;
-            transition: all .2s;
-        }
-
-        /* FOCO MORADO LEVE (Como el anterior) */
-        input:focus {
             outline: none;
-            border-color: var(--purple-focus);
-            background-color: var(--purple-light);
-            box-shadow: 0 0 0 4px var(--purple-ring);
-        }
-
-        /* CHECKBOX LIST */
-        .checkbox-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
-        .checkbox-item input { display: none; }
-        .checkbox-label {
-            display: flex; align-items: center; padding: 12px;
-            border: 2px solid var(--border); border-radius: 12px;
-            cursor: pointer; transition: all 0.2s;
-        }
-        .checkbox-label:hover { border-color: var(--purple-focus); background: var(--purple-light); }
-        
-        .custom-box {
-            width: 18px; height: 18px; border: 2px solid #d1d5db;
-            border-radius: 50%; margin-right: 10px; display: flex;
-            align-items: center; justify-content: center; transition: all 0.2s;
-        }
-
-        .checkbox-item input:checked + .checkbox-label { border-color: var(--purple-focus); background: var(--purple-light); }
-        .checkbox-item input:checked + .checkbox-label .custom-box { background: var(--purple-focus); border-color: var(--purple-focus); }
-        .checkbox-item input:checked + .checkbox-label .custom-box::after {
-            content: ""; width: 6px; height: 6px; background: white; border-radius: 50%;
-        }
-
-        .label-text { font-size: 13px; font-weight: 600; color: var(--text); }
-
-        button.btn-submit {
-            width: 100%; padding: 16px; margin-top: 25px;
-            border-radius: 12px; border: none;
-            background: var(--primary); color: #fff;
-            font-size: 16px; font-weight: 700; cursor: pointer;
             transition: all .3s;
         }
-        button.btn-submit:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(255, 114, 37, 0.4); }
 
-        /* COLUMNA DERECHA: SIDEBAR (Cómo funciona) */
-        .info-section {
-            background: #f8fafc;
-            padding: 50px 40px;
-            border-left: 1px solid var(--border);
+        input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(255, 114, 37, 0.1);
+        }
+
+        .checkbox-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .checkbox-item {
+            margin-bottom: 8px;
+        }
+
+        .checkbox-label {
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .checkbox-label:hover {
+            background-color: #f9fafb;
+            border-color: #d1d5db;
+        }
+
+        .checkbox-item input[type="checkbox"]:checked + .checkbox-label {
+            border-color: var(--green);
+            background-color: #f0fdf4;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            display: none;
+        }
+
+        .custom-box {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #d1d5db;
+            border-radius: 6px;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
             justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s;
+            background: white;
         }
 
-        .info-section h3 { font-size: 18px; color: var(--text); margin-bottom: 25px; }
-
-        .step { display: flex; gap: 15px; margin-bottom: 25px; }
-        .step-num {
-            width: 30px; height: 30px; background: var(--soft-blue-bg);
-            color: var(--soft-blue-text); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 800; font-size: 14px; flex-shrink: 0;
-        }
-        .step-text h4 { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
-        .step-text p { font-size: 13px; color: var(--muted); line-height: 1.5; }
-
-        .status-note {
-            margin-top: 20px; padding: 15px; background: #fff7ed;
-            border: 1px solid #ffedd5; border-radius: 12px;
-            color: #c2410c; font-size: 12px; line-height: 1.5;
+        .checkbox-item input[type="checkbox"]:checked + .checkbox-label .custom-box {
+            background-color: var(--green);
+            border-color: var(--green);
         }
 
-        /* MENSAJES Y PANTALLA ÉXITO */
-        .msg { margin-top: 15px; font-size: 14px; text-align: center; }
-        .error { color: #b91c1c; font-weight: 600; }
-        .success-screen { display: none; text-align: center; padding: 40px 0; }
+        .custom-box::after {
+            content: "";
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+            display: none;
+            margin-bottom: 2px;
+        }
+
+        .checkbox-item input[type="checkbox"]:checked + .checkbox-label .custom-box::after {
+            display: block;
+        }
+
+        .label-text {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text);
+            text-align: left;
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            margin-top: 15px;
+            border-radius: 12px;
+            border: none;
+            background: var(--primary);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .3s;
+        }
+
+        button:hover { background: var(--primary-dark); transform: translateY(-1px); }
+        button:disabled { opacity: .6; cursor: not-allowed; }
+
+        .msg { margin-top: 18px; font-size: 14px; min-height: 20px; }
+        .error { background: #fef2f2; color: #b91c1c; padding: 12px; border-radius: 10px; border: 1px solid #fee2e2; }
+
+        .success-screen { display: none; text-align: center; }
         .success-icon { font-size: 60px; margin-bottom: 20px; display: block; }
+        .btn-secondary { background: #374151; }
 
-        @keyframes fade { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fade {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-        @media (max-width: 900px) {
-            .main-container { grid-template-columns: 1fr; }
-            .info-section { order: 2; border-left: none; border-top: 1px solid var(--border); }
-            .checkbox-list { grid-template-columns: 1fr; }
+        /* RESPONSIVO */
+        @media (max-width: 850px) {
+            .main-wrapper {
+                grid-template-columns: 1fr;
+                max-width: 460px;
+            }
+            .info-column {
+                display: none; /* Ocultar info en móviles para mantener foco en form */
+            }
         }
     </style>
 </head>
 <body>
 
-<div class="main-container">
-    <div class="form-section">
+<div class="main-wrapper">
+    <div class="form-column">
         <div id="form-screen">
             <img src="Logo carflex.jpg" class="logo" alt="Carflex">
             <h2>Portal de Documentos</h2>
-            <p class="subtitle">Ingresa tus datos para recibir tu documentación.</p>
+            <p class="subtitle">Solicita tus documentos vehiculares aquí.</p>
 
             <form id="form">
                 <div class="input-group">
-                    <label>Patente del Vehículo</label>
+                    <span>Patente</span>
                     <input id="patente" type="text" placeholder="Ej: AB123C" maxlength="6" required autocomplete="off">
                 </div>
 
                 <div class="input-group">
-                    <label>Tu Correo Electrónico</label>
+                    <span>Correo Electrónico</span>
                     <input id="correo" type="email" placeholder="ejemplo@correo.com" required>
                 </div>
 
                 <div class="input-group">
-                    <label>Documentos Requeridos</label>
+                    <span>Tipo de Documento</span>
                     <ul class="checkbox-list">
                         <li class="checkbox-item">
                             <input type="checkbox" id="tipoSOAP" name="tipo" value="SOAP">
@@ -207,61 +309,61 @@
                             <input type="checkbox" id="tipoPC" name="tipo" value="PC">
                             <label for="tipoPC" class="checkbox-label">
                                 <div class="custom-box"></div>
-                                <span class="label-text">P. Circulación</span>
+                                <span class="label-text">Permiso de Circulación</span>
                             </label>
                         </li>
                         <li class="checkbox-item">
                             <input type="checkbox" id="tipoMANT" name="tipo" value="MANTENCION">
                             <label for="tipoMANT" class="checkbox-label">
                                 <div class="custom-box"></div>
-                                <span class="label-text">Mantención</span>
+                                <span class="label-text">Certificado Última Mantención</span>
                             </label>
                         </li>
                     </ul>
                 </div>
 
-                <button type="submit" id="btn-submit" class="btn-submit">Solicitar Documentos</button>
+                <button type="submit" id="btn-submit">Solicitar Certificado</button>
                 <div id="msg" class="msg"></div>
             </form>
         </div>
 
         <div id="success-screen" class="success-screen">
-            <span class="success-icon">📩</span>
-            <h3>¡Solicitud en camino!</h3>
-            <p style="color: var(--muted); margin-top: 10px;">Hemos procesado tu requerimiento. Revisa tu bandeja de entrada en:<br><strong id="correo-confirmado" style="color: var(--text);"></strong></p>
-            <button class="btn-submit" style="background: #374151; margin-top: 30px;" onclick="resetForm()">Hacer otra consulta</button>
+            <span class="success-icon">✅</span>
+            <h3>Solicitud enviada</h3>
+            <p>El certificado fue enviado al correo:<br><strong id="correo-confirmado"></strong></p>
+            <button class="btn-secondary" onclick="resetForm()">Solicitar otro certificado</button>
         </div>
     </div>
 
-    <div class="info-section">
-        <h3>¿Cómo funciona el portal?</h3>
+    <div class="info-column">
+        <h3>¿Cómo funciona?</h3>
         
         <div class="step">
-            <div class="step-num">1</div>
-            <div class="step-text">
-                <h4>Identificación</h4>
-                <p>Ingresa la patente del vehículo y el correo donde quieres recibir los archivos.</p>
+            <div class="step-number">1</div>
+            <div class="step-content">
+                <h4>Ingresa tus datos</h4>
+                <p>Escribe la patente del vehículo y el correo electrónico donde quieres recibir los documentos.</p>
             </div>
         </div>
 
         <div class="step">
-            <div class="step-num">2</div>
-            <div class="step-text">
-                <h4>Búsqueda Automática</h4>
-                <p>Nuestro sistema validará la información y buscará los documentos en la base de datos.</p>
+            <div class="step-number">2</div>
+            <div class="step-content">
+                <h4>Procesamiento</h4>
+                <p>Nuestro sistema buscará automáticamente la documentación solicitada en nuestros servidores.</p>
             </div>
         </div>
 
         <div class="step">
-            <div class="step-num">3</div>
-            <div class="step-text">
-                <h4>Envío Inmediato</h4>
-                <p>Recibirás un correo con los documentos adjuntos o una notificación si falta algún dato.</p>
+            <div class="step-number">3</div>
+            <div class="step-content">
+                <h4>Recepción por Email</h4>
+                <p>En pocos segundos recibirás un correo con los archivos adjuntos. Si hay algún error, también se te informará.</p>
             </div>
         </div>
 
-        <div class="status-note">
-            <strong>Aviso:</strong> Si la información es incorrecta o el documento no está disponible, se te notificará al mismo correo ingresado.
+        <div style="margin-top: 20px; padding: 15px; background: #fff7ed; border-radius: 10px; border: 1px solid #ffedd5;">
+            <p style="font-size: 12px; color: #9a3412;"><strong>Nota:</strong> Asegúrate de que la patente sea la correcta para evitar retrasos en el envío.</p>
         </div>
     </div>
 </div>
@@ -270,7 +372,7 @@
     const WEBHOOK_URL = "https://uncollapsible-melodiously-chung.ngrok-free.dev/webhook/certificado";
 
     function normalizarPatente(v) { return v.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6); }
-    function patenteValida(p) { return p.length >= 5; } // Validación simplificada para permitir distintos formatos
+    function patenteValida(p) { return /^[A-Z]{4}[0-9]{2}$/.test(p) || /^[A-Z]{2}[0-9]{4}$/.test(p) || /^[A-Z]{2}[0-9]{2}[A-Z]{2}$/.test(p); }
 
     const inputPatente = document.getElementById("patente");
     inputPatente.addEventListener("input", e => { e.target.value = normalizarPatente(e.target.value); });
@@ -285,20 +387,19 @@
 
         if (!patenteValida(patente)) {
             msg.className = "msg error";
-            msg.innerHTML = "Por favor, ingresa una patente válida.";
+            msg.innerHTML = "Formato de patente inválido.";
             return;
         }
 
         if (tipos.length === 0) {
             msg.className = "msg error";
-            msg.innerHTML = "Selecciona al menos un documento.";
+            msg.innerHTML = "Debe seleccionar al menos un tipo de documento.";
             return;
         }
 
         msg.className = "msg";
-        msg.innerHTML = "🔍 Buscando documentos...";
+        msg.innerHTML = "Procesando...";
         btn.disabled = true;
-        btn.style.opacity = "0.7";
 
         try {
             const response = await fetch(WEBHOOK_URL, {
@@ -306,18 +407,15 @@
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ patente, correo, tipos })
             });
-            
             if (!response.ok) throw new Error();
-            
             document.getElementById("correo-confirmado").textContent = correo;
             document.getElementById("form-screen").style.display = "none";
             document.getElementById("success-screen").style.display = "block";
         } catch (err) {
             msg.className = "msg error";
-            msg.innerHTML = "Hubo un problema. Intenta de nuevo.";
+            msg.innerHTML = "Error de conexión. Intente nuevamente.";
         }
         btn.disabled = false;
-        btn.style.opacity = "1";
     });
 
     function resetForm() {
